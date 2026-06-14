@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniTest.pk - Pakistan's #1 University Test Preparation Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <!-- Question Banks -->
+    <script src="questions.js"></script>
+    <script src="questions_uet.js"></script>
+    <script src="questions_giki.js"></script>
+    <script src="questions_fast.js"></script>
+    <script src="questions_lums.js"></script>
+    <script src="questions_comsats.js"></script>
+
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --accent: #00D9FF;
+            --bg: #F0F4F8;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text: #2D3748;
+            --shadow: 20px 20px 60px #d1d9e6, -20px -20px 60px #ffffff;
+            --shadow-inset: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+            --clay-border: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #E0C3FC 0%, #8EC5FC 100%);
+            min-height: 100vh;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(108, 99, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(108, 99, 255, 0.8); }
+        }
+
+        @keyframes blob {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        }
+
+        /* Claymorphism Utilities */
+        .clay-card {
+            background: var(--card-bg);
+            border-radius: var(--clay-border);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .clay-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 25px 25px 75px #c4c9d4, -25px -25px 75px #ffffff;
+        }
+
+        .clay-btn {
+            background: linear-gradient(135deg, var(--primary), #8B5CF6);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.4), 
+                        inset 0 -5px 10px rgba(0,0,0,0.1),
+                        inset 0 5px 10px rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.6);
+        }
+
+        .clay-btn:active {
+            transform: translateY(0);
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .clay-btn.secondary {
+            background: linear-gradient(135deg, var(--secondary), #FF8FAB);
+        }
+
+        .clay-input {
+            width: 100%;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            background: #F0F4F8;
+            box-shadow: inset 6px 6px 12px #d1d9e6, inset -6px -6px 12px #ffffff;
+            font-size: 16px;
+            color: var(--text);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .clay-input:focus {
+            box-shadow: inset 8px 8px 16px #d1d9e6, inset -8px -8px 16px #ffffff, 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        /* Background Blobs */
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            animation: blob 10s infinite alternate;
+        }
+
+        .blob-1 { top: -10%; left: -10%; background: rgba(108, 99, 255, 0.3); }
+        .blob-2 { bottom: -10%; right: -10%; background: rgba(255, 101, 132, 0.3); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; background: rgba(0, 217, 255, 0.2); animation-delay: -2s; }
+
+        /* Navigation */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .user-badge {
+            background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 5% 50px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            animation: slideUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #2D3748 0%, #6C63FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #4A5568;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        /* Universities Grid */
+        .section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: var(--text);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            border-radius: 2px;
+        }
+
+        .uni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .uni-card {
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .uni-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .uni-card:hover::before {
+            opacity: 1;
+        }
+
+        .uni-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
+            transform: rotate(-5deg);
+            transition: transform 0.3s;
+        }
+
+        .uni-card:hover .uni-icon {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .uni-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .uni-test-name {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .uni-details {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .calc-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .calc-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            margin: 40px 5%;
+            border-radius: 40px;
+            padding: 60px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* Modals */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: slideUp 0.4s;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #F0F4F8;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #718096;
+            box-shadow: var(--shadow-inset);
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: var(--secondary);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #4A5568;
+            font-size: 0.9rem;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .input-row span {
+            font-weight: 600;
+            color: #718096;
+        }
+
+        .bank-info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .bank-info-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .bank-detail {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            font-family: monospace;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Test Interface (Image 2 Style) */
+        .test-interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #F8FAFC;
+            z-index: 3000;
+            flex-direction: column;
+        }
+
+        .test-header {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .test-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .timer-box {
+            background: linear-gradient(135deg, var(--primary), #8B5CF6);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: monospace;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .test-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .question-panel {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: white;
+            margin: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .question-header {
+            font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-item {
+            padding: 20px 25px;
+            background: #F7FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-item:hover {
+            background: #EDF2F7;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(108, 99, 255, 0.05));
+            border-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .option-radio {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #CBD5E0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .option-item.selected .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .side-panel {
+            width: 350px;
+            background: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid #E2E8F0;
+        }
+
+        .palette-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .question-palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .palette-btn {
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .palette-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .palette-btn.not-answered { background: #FC8181; color: white; }
+        .palette-btn.answered { background: #48BB78; color: white; }
+        .palette-btn.review { background: #F6AD55; color: white; }
+        .palette-btn.current { 
+            background: var(--primary); 
+            color: white; 
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+        }
+
+        .test-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-save { background: #48BB78; color: white; }
+        .btn-review { background: #F6AD55; color: white; }
+        .btn-submit { background: var(--secondary); color: white; }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            padding: 100px 5% 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .admin-sidebar {
+            padding: 30px;
+        }
+
+        .admin-stat {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 15px;
+        }
+
+        .admin-main {
+            padding: 30px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .data-table th {
+            background: rgba(108, 99, 255, 0.1);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending { background: #FEF3C7; color: #D97706; }
+        .status-approved { background: #D1FAE5; color: #059669; }
+        .status-premium { background: #DBEAFE; color: #2563EB; }
+
+        .admin-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-approve { background: #10B981; color: white; }
+        .btn-decline { background: #EF4444; color: white; }
+        .btn-delete { background: #6B7280; color: white; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .test-body { flex-direction: column; }
+            .side-panel { width: 100%; border-left: none; border-top: 2px solid #E2E8F0; }
+            .admin-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .uni-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 20px; }
+            .question-panel { margin: 10px; padding: 20px; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #F0F4F8; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
+
+        /* Loading Animation */
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #F3F3F3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            UniTest.pk
+        </div>
+        <div class="nav-links">
+            <a onclick="showSection('home')">Home</a>
+            <a onclick="showSection('universities')">Mock Tests</a>
+            <a onclick="showSection('calculators')">Calculators</a>
+            <a onclick="showAdminLogin()">Admin</a>
+            <div id="userDisplay" style="display:none;">
+                <span class="user-badge" id="userNameDisplay">Guest</span>
+            </div>
+            <button class="clay-btn" id="authBtn" onclick="showLoginModal()" style="padding: 10px 25px; font-size: 14px;">
+                Login / Sign Up
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Master Your University Entry Tests</h1>
+            <p>Prepare for NUST, UET, GIKI, FAST, LUMS, COMSATS & more with Pakistan's most advanced mock testing platform. Clay-soft learning experience with real-time analytics.</p>
+            
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="clay-btn" onclick="showSection('universities')">
+                    <i class="fas fa-play"></i> Start Free Mock Test
+                </button>
+                <button class="clay-btn secondary" onclick="showPremiumModal()">
+                    <i class="fas fa-crown"></i> Go Premium
+                </button>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item clay-card" style="padding: 20px;">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Universities</div>
+                </div>
+                <div class="stat-item clay-card" style="padding: 20px;">
+                    <div class="stat-number">50k+</div>
+                    <div class="stat-label">Questions</div>
+                </div>
+                <div class="stat-item clay-card" style="padding: 20px;">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Universities Section -->
+    <section class="section" id="universities" style="display:none;">
+        <h2 class="section-title">Select Your University</h2>
+        
+        <div class="uni-grid">
+            <!-- NUST -->
+            <div class="uni-card clay-card" onclick="selectUniversity('nust')">
+                <div class="uni-icon">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <div class="uni-name">NUST</div>
+                <div class="uni-test-name">NET (CBNET)</div>
+                <div class="uni-details">200 MCQs • 180 mins<br>Engineering | Medical | Business</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('nust')">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+
+            <!-- UET -->
+            <div class="uni-card clay-card" onclick="selectUniversity('uet')">
+                <div class="uni-icon" style="background: linear-gradient(135deg, #FF6B6B, #EE5A6F);">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="uni-name">UET Lahore</div>
+                <div class="uni-test-name">ECAT</div>
+                <div class="uni-details">100 MCQs • 100 mins<br>Engineering Focus</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('uet')" style="border-color: #FF6B6B; color: #FF6B6B;">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+
+            <!-- GIKI -->
+            <div class="uni-card clay-card" onclick="selectUniversity('giki')">
+                <div class="uni-icon" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="uni-name">GIKI</div>
+                <div class="uni-test-name">Entry Test</div>
+                <div class="uni-details">80 MCQs • 90 mins<br>Highly Competitive</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('giki')" style="border-color: #4ECDC4; color: #4ECDC4;">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+
+            <!-- FAST -->
+            <div class="uni-card clay-card" onclick="selectUniversity('fast')">
+                <div class="uni-icon" style="background: linear-gradient(135deg, #F093FB, #F5576C);">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="uni-name">FAST NUCES</div>
+                <div class="uni-test-name">Admission Test</div>
+                <div class="uni-details">IQ + Analytical + Math<br>CS & Engineering</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('fast')" style="border-color: #F5576C; color: #F5576C;">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+
+            <!-- LUMS -->
+            <div class="uni-card clay-card" onclick="selectUniversity('lums')">
+                <div class="uni-icon" style="background: linear-gradient(135deg, #FA709A, #FEE140);">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="uni-name">LUMS</div>
+                <div class="uni-test-name">LCAT / SAT</div>
+                <div class="uni-details">Aptitude Based<br>Business & Engineering</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('lums')" style="border-color: #FA709A; color: #FA709A;">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+
+            <!-- COMSATS -->
+            <div class="uni-card clay-card" onclick="selectUniversity('comsats')">
+                <div class="uni-icon" style="background: linear-gradient(135deg, #30CFD0, #330867);">
+                    <i class="fas fa-satellite"></i>
+                </div>
+                <div class="uni-name">COMSATS / Air</div>
+                <div class="uni-test-name">NTS NAT</div>
+                <div class="uni-details">90 MCQs • 120 mins<br>Analytical + Subject</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('comsats')" style="border-color: #30CFD0; color: #30CFD0;">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+
+            <!-- ADD NEW UNIVERSITY CARD HERE -->
+            <!-- 
+            <div class="uni-card clay-card" onclick="selectUniversity('newuni')">
+                <div class="uni-icon" style="background: linear-gradient(135deg, #COLOR1, #COLOR2);">
+                    <i class="fas fa-icon"></i>
+                </div>
+                <div class="uni-name">UNI NAME</div>
+                <div class="uni-test-name">TEST NAME</div>
+                <div class="uni-details">Details here</div>
+                <button class="calc-btn" onclick="event.stopPropagation(); showCalcModal('newuni')">
+                    <i class="fas fa-calculator"></i> Aggregate Calc
+                </button>
+            </div>
+            -->
+        </div>
+    </section>
+
+    <!-- Test Limit Warning Modal -->
+    <div class="modal-overlay" id="limitModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('limitModal')">&times;</button>
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-lock" style="font-size: 60px; color: var(--secondary); margin-bottom: 20px;"></i>
+                <h2 class="modal-title">Test Limit Reached</h2>
+                <p style="color: #718096; margin-bottom: 30px;">
+                    You have used your 2 free mock tests. Upgrade to Premium for unlimited access to all university tests.
+                </p>
+                <div class="bank-info-box">
+                    <h3><i class="fas fa-university"></i> Payment Details</h3>
+                    <div class="bank-detail">Easypaisa: 0340-9016279</div>
+                    <div class="bank-detail">Account Name: Muhammad Rafaqat</div>
+                    <div style="margin-top: 15px; font-size: 0.9rem;">
+                        Amount: <strong>Rs. 500</strong> (Lifetime Access)
+                    </div>
+                </div>
+                <button class="clay-btn" onclick="showPaymentForm()" style="margin-top: 20px; width: 100%;">
+                    Submit Payment Details
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Submit Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('paymentModal')">&times;</button>
+            <h2 class="modal-title">Verify Payment</h2>
+            <p style="color: #718096; margin-bottom: 20px;">Submit your transaction details after payment. Admin will verify within 24 hours.</p>
+            
+            <form onsubmit="submitPayment(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" class="clay-input" id="payName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" class="clay-input" id="payEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Easypaisa Transaction ID</label>
+                    <input type="text" class="clay-input" id="payTID" placeholder="e.g., T1234567890" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount Paid</label>
+                    <input type="text" class="clay-input" value="Rs. 500" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Date of Payment</label>
+                    <input type="date" class="clay-input" id="payDate" required>
+                </div>
+                <button type="submit" class="clay-btn" style="width: 100%;">
+                    Submit for Verification
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Aggregate Calculator Modal -->
+    <div class="modal-overlay" id="calcModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <button class="modal-close" onclick="closeModal('calcModal')">&times;</button>
+            <h2 class="modal-title" id="calcTitle">Aggregate Calculator</h2>
+            <div id="calcContent">
+                <!-- Dynamic calculator content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Field Selection Modal (for NUST) -->
+    <div class="modal-overlay" id="fieldModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('fieldModal')">&times;</button>
+            <h2 class="modal-title">Select Field</h2>
+            <div id="fieldContainer" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <!-- Dynamic fields -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
+            <h2 class="modal-title" id="authTitle">Login</h2>
+            <form onsubmit="handleAuth(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" class="clay-input" id="authEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="clay-input" id="authPassword" required>
+                </div>
+                <button type="submit" class="clay-btn" style="width: 100%; margin-bottom: 15px;">
+                    <span id="authBtnText">Login</span>
+                </button>
+                <p style="text-align: center; color: #718096; font-size: 0.9rem;">
+                    <span id="authToggleText">Don't have an account?</span>
+                    <a href="#" onclick="toggleAuthMode()" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                        <span id="authToggleLink">Sign Up</span>
+                    </a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Test Interface -->
+    <div class="test-interface" id="testInterface">
+        <div class="test-header">
+            <div class="test-logo">
+                <i class="fas fa-graduation-cap"></i> UniTest.pk
+            </div>
+            <div class="timer-box" id="timerDisplay">03:00:00</div>
+            <button class="action-btn btn-submit" onclick="submitTest()">
+                <i class="fas fa-check-circle"></i> Submit Test
+            </button>
+        </div>
+
+        <div class="test-body">
+            <div class="question-panel">
+                <div class="question-header" id="subjectName">Mathematics</div>
+                <div class="question-text" id="questionText">Loading question...</div>
+                <div class="options-container" id="optionsContainer"></div>
+            </div>
+
+            <div class="side-panel">
+                <div class="palette-title">Question Palette</div>
+                <div class="question-palette" id="questionPalette"></div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #48BB78;"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #FC8181;"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #F6AD55;"></div>
+                        <span>Marked for Review</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--primary);"></div>
+                        <span>Current Question</span>
+                    </div>
+                </div>
+
+                <div class="test-actions">
+                    <button class="action-btn btn-save" onclick="saveAndNext()">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button class="action-btn btn-review" onclick="markReview()">
+                        <i class="fas fa-flag"></i> Review
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <h2 class="section-title">Admin Dashboard</h2>
+        
+        <div class="admin-grid">
+            <div class="admin-sidebar clay-card">
+                <div class="admin-stat">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div>Total Users</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="stat-number" id="pendingPayments">0</div>
+                    <div>Pending Payments</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="stat-number" id="premiumUsers">0</div>
+                    <div>Premium Users</div>
+                </div>
+                
+                <button class="clay-btn" onclick="logoutAdmin()" style="width: 100%; margin-top: 20px;">
+                    Logout
+                </button>
+            </div>
+
+            <div class="admin-main clay-card">
+                <h3 style="margin-bottom: 20px; color: var(--text);">Pending Verifications</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table" id="paymentsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Transaction ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsBody">
+                            <!-- Dynamic -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; color: var(--text);">All Users</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Tests Taken</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersBody">
+                            <!-- Dynamic -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ADD USER FORM -->
+                <div style="margin-top: 40px; padding-top: 30px; border-top: 2px solid #E2E8F0;">
+                    <h3 style="margin-bottom: 20px;">Add New User (Manual)</h3>
+                    <form onsubmit="addUserManual(event)" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: end;">
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-size: 0.9rem; color: #4A5568;">Email</label>
+                            <input type="email" class="clay-input" id="newUserEmail" required style="padding: 10px 20px;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-size: 0.9rem; color: #4A5568;">Password</label>
+                            <input type="password" class="clay-input" id="newUserPass" required style="padding: 10px 20px;">
+                        </div>
+                        <button type="submit" class="clay-btn" style="padding: 10px 30px; margin: 0;">
+                            Add User
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal-overlay" id="adminLoginModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="modal-close" onclick="closeModal('adminLoginModal')">&times;</button>
+            <h2 class="modal-title">Admin Access</h2>
+            <form onsubmit="checkAdminLogin(event)">
+                <div class="form-group">
+                    <label>Admin Key</label>
+                    <input type="password" class="clay-input" id="adminKey" required>
+                </div>
+                <button type="submit" class="clay-btn" style="width: 100%;">
+                    Access Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CONFIGURATION ====================
+        const API_BASE = 'https://your-worker.your-subdomain.workers.dev'; // Change this to your Cloudflare Worker URL
+        
+        // University Configurations
+        const UNI_CONFIG = {
+            nust: {
+                name: 'NUST',
+                fullName: 'National University of Sciences & Technology',
+                fields: [
+                    { key: 'engineering', name: 'NET-Engineering', code: 'ENG', mcqs: 200, time: 180 },
+                    { key: 'applied_sciences', name: 'NET-Applied Sciences', code: 'APS', mcqs: 200, time: 180 },
+                    { key: 'business_studies', name: 'NET-Business Studies', code: 'BUS', mcqs: 200, time: 180 },
+                    { key: 'architecture', name: 'NET-Architecture', code: 'ARC', mcqs: 200, time: 180 },
+                    { key: 'natural_sciences', name: 'NET-Natural Sciences', code: 'NSC', mcqs: 200, time: 180 }
+                ],
+                calcFormula: 'nust'
+            },
+            uet: {
+                name: 'UET',
+                fullName: 'University of Engineering & Technology',
+                fields: [{ key: 'engineering', name: 'ECAT Engineering', code: 'ECAT', mcqs: 100, time: 100 }],
+                calcFormula: 'uet'
+            },
+            giki: {
+                name: 'GIKI',
+                fullName: 'Ghulam Ishaq Khan Institute',
+                fields: [{ key: 'engineering', name: 'GIKI Entry Test', code: 'GIKI', mcqs: 80, time: 90 }],
+                calcFormula: 'giki'
+            },
+            fast: {
+                name: 'FAST',
+                fullName: 'FAST-NUCES',
+                fields: [{ key: 'engineering', name: 'FAST Admission', code: 'FAST', mcqs: 30, time: 90 }],
+                calcFormula: 'fast'
+            },
+            lums: {
+                name: 'LUMS',
+                fullName: 'Lahore University of Management Sciences',
+                fields: [{ key: 'engineering', name: 'LCAT', code: 'LCAT', mcqs: 30, time: 120 }],
+                calcFormula: 'lums'
+            },
+            comsats: {
+                name: 'COMSATS',
+                fullName: 'COMSATS University / Air University',
+                fields: [{ key: 'engineering', name: 'NTS NAT-IE', code: 'NAT', mcqs: 90, time: 120 }],
+                calcFormula: 'comsats'
+            }
+            // ADD NEW UNIVERSITY CONFIG HERE
+            // newuni: { name: '...', fields: [...], calcFormula: '...' }
+        };
+
+        // ==================== STATE ====================
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let selectedUni = null;
+        let selectedField = null;
+        let currentQuestion = 0;
+        let questions = [];
+        let timerInterval = null;
+        let testsTaken = parseInt(localStorage.getItem('testsTaken')) || 0;
+
+        // ==================== INITIALIZATION ====================
+        window.onload = function() {
+            updateAuthUI();
+            if (currentUser && currentUser.isAdmin) {
+                showAdminPanel();
+            }
+        };
+
+        // ==================== NAVIGATION ====================
+        function showSection(section) {
+            document.querySelectorAll('.hero, .section').forEach(el => el.style.display = 'none');
+            document.getElementById(section).style.display = 'block';
+            if (section === 'home') document.querySelector('.hero').style.display = 'flex';
+            window.scrollTo(0, 0);
+        }
+
+        // ==================== AUTHENTICATION ====================
+        function showLoginModal() {
+            document.getElementById('authModal').style.display = 'flex';
+        }
+
+        let authMode = 'login';
+        function toggleAuthMode() {
+            authMode = authMode === 'login' ? 'signup' : 'login';
+            document.getElementById('authTitle').textContent = authMode === 'login' ? 'Login' : 'Sign Up';
+            document.getElementById('authBtnText').textContent = authMode === 'login' ? 'Login' : 'Create Account';
+            document.getElementById('authToggleText').textContent = authMode === 'login' ? "Don't have an account?" : "Already have an account?";
+            document.getElementById('authToggleLink').textContent = authMode === 'login' ? 'Sign Up' : 'Login';
+        }
+
+        async function handleAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            
+            try {
+                const endpoint = authMode === 'login' ? '/api/auth/login' : '/api/auth/register';
+                const response = await fetch(API_BASE + endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    currentUser = data.user;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    localStorage.setItem('testsTaken', data.user.testsTaken || 0);
+                    testsTaken = data.user.testsTaken || 0;
+                    updateAuthUI();
+                    closeModal('authModal');
+                    alert(authMode === 'login' ? 'Welcome back!' : 'Account created successfully!');
+                } else {
+                    alert(data.message || 'Authentication failed');
+                }
+            } catch (error) {
+                // Offline fallback
+                if (authMode === 'login') {
+                    // Simple local auth for demo
+                    const stored = localStorage.getItem('user_' + email);
+                    if (stored && JSON.parse(stored).password === password) {
+                        currentUser = JSON.parse(stored);
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        updateAuthUI();
+                        closeModal('authModal');
+                    } else {
+                        alert('Invalid credentials or offline mode');
+                    }
+                } else {
+                    const newUser = { email, password, isPremium: false, testsTaken: 0 };
+                    localStorage.setItem('user_' + email, JSON.stringify(newUser));
+                    currentUser = newUser;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    updateAuthUI();
+                    closeModal('authModal');
+                    alert('Account created (local mode)');
+                }
+            }
+        }
+
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('authBtn').style.display = 'none';
+                document.getElementById('userDisplay').style.display = 'block';
+                document.getElementById('userNameDisplay').textContent = currentUser.isPremium ? '⭐ Premium' : 'Free User';
+            } else {
+                document.getElementById('authBtn').style.display = 'block';
+                document.getElementById('userDisplay').style.display = 'none';
+            }
+        }
+
+        // ==================== UNIVERSITY SELECTION ====================
+        function selectUniversity(uniKey) {
+            selectedUni = uniKey;
+            
+            // Check limits
+            if (!currentUser || (!currentUser.isPremium && testsTaken >= 2)) {
+                showModal('limitModal');
+                return;
+            }
+
+            const config = UNI_CONFIG[uniKey];
+            
+            // If NUST, show field selection, else start directly
+            if (uniKey === 'nust' && config.fields.length > 1) {
+                showFieldSelection(config);
+            } else {
+                selectedField = config.fields[0];
+                startTest();
+            }
+        }
+
+        function showFieldSelection(config) {
+            const container = document.getElementById('fieldContainer');
+            container.innerHTML = '';
+            config.fields.forEach(field => {
+                const btn = document.createElement('button');
+                btn.className = 'clay-btn';
+                btn.style.width = '100%';
+                btn.style.marginBottom = '10px';
+                btn.innerHTML = `
+                    <div style="font-size: 1.1rem; margin-bottom: 5px;">${field.name}</div>
+                    <div style="font-size: 0.8rem; opacity: 0.9;">${field.mcqs} MCQs • ${field.time} mins</div>
+                `;
+                btn.onclick = () => {
+                    selectedField = field;
+                    closeModal('fieldModal');
+                    startTest();
+                };
+                container.appendChild(btn);
+            });
+            showModal('fieldModal');
+        }
+
+        // ==================== TEST INTERFACE ====================
+        function startTest() {
+            // Increment test count
+            testsTaken++;
+            localStorage.setItem('testsTaken', testsTaken);
+            
+            // Load questions based on uni
+            loadQuestions();
+            
+            // Show interface
+            document.getElementById('testInterface').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Initialize
+            currentQuestion = 0;
+            renderQuestion();
+            startTimer(selectedField.time * 60);
+            renderPalette();
+        }
+
+        function loadQuestions() {
+            // Mock loading - in real app, fetch from specific question bank
+            const uni = selectedUni;
+            const field = selectedField.key;
+            
+            // This would load from the respective questions.js file
+            // For demo, creating dummy questions
+            questions = [];
+            for (let i = 0; i < selectedField.mcqs; i++) {
+                questions.push({
+                    id: i,
+                    text: `Sample question ${i + 1} for ${UNI_CONFIG[uni].name} ${field}?`,
+                    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+                    correct: 0,
+                    selected: null,
+                    review: false
+                });
+            }
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('subjectName').textContent = selectedField.name + ' - Question ' + (currentQuestion + 1);
+            document.getElementById('questionText').textContent = q.text;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = 'option-item' + (q.selected === idx ? ' selected' : '');
+                div.innerHTML = `
+                    <div class="option-radio"></div>
+                    <div>${opt}</div>
+                `;
+                div.onclick = () => selectOption(idx);
+                container.appendChild(div);
+            });
+            
+            updatePalette();
+        }
+
+        function selectOption(idx) {
+            questions[currentQuestion].selected = idx;
+            renderQuestion();
+        }
+
+        function saveAndNext() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            }
+        }
+
+        function markReview() {
+            questions[currentQuestion].review = !questions[currentQuestion].review;
+            updatePalette();
+        }
+
+        function renderPalette() {
+            const container = document.getElementById('questionPalette');
+            container.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'palette-btn';
+                btn.textContent = idx + 1;
+                btn.onclick = () => {
+                    currentQuestion = idx;
+                    renderQuestion();
+                };
+                container.appendChild(btn);
+            });
+            updatePalette();
+        }
+
+        function updatePalette() {
+            const btns = document.querySelectorAll('.palette-btn');
+            btns.forEach((btn, idx) => {
+                btn.className = 'palette-btn';
+                if (idx === currentQuestion) btn.classList.add('current');
+                else if (questions[idx].review) btn.classList.add('review');
+                else if (questions[idx].selected !== null) btn.classList.add('answered');
+                else btn.classList.add('not-answered');
+            });
+        }
+
+        function startTimer(seconds) {
+            let remaining = seconds;
+            const display = document.getElementById('timerDisplay');
+            
+            timerInterval = setInterval(() => {
+                const h = Math.floor(remaining / 3600);
+                const m = Math.floor((remaining % 3600) / 60);
+                const s = remaining % 60;
+                display.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+                remaining--;
+            }, 1000);
+        }
+
+        function submitTest() {
+            if (!confirm('Are you sure you want to submit?')) return;
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            let correct = 0;
+            questions.forEach(q => {
+                if (q.selected === q.correct) correct++;
+            });
+            
+            alert(`Test submitted! Score: ${correct}/${questions.length}`);
+            document.getElementById('testInterface').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            showSection('home');
+        }
+
+        // ==================== AGGREGATE CALCULATORS ====================
+        function showCalcModal(uni) {
+            const config = UNI_CONFIG[uni];
+            document.getElementById('calcTitle').textContent = config.name + ' Aggregate Calculator';
+            
+            let html = '';
+            
+            if (uni === 'nust') {
+                html = `
+                    <div style="margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label>NET Marks (out of 200)</label>
+                            <input type="number" class="clay-input" id="nustNet" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label>FSc Marks Obtained</label>
+                            <input type="number" class="clay-input" id="nustFscObt">
+                        </div>
+                        <div class="form-group">
+                            <label>FSc Total Marks</label>
+                            <input type="number" class="clay-input" id="nustFscTot" value="1100">
+                        </div>
+                        <div class="form-group">
+                            <label>Matric Marks Obtained</label>
+                            <input type="number" class="clay-input" id="nustMatObt">
+                        </div>
+                        <div class="form-group">
+                            <label>Matric Total Marks</label>
+                            <input type="number" class="clay-input" id="nustMatTot" value="1100">
+                        </div>
+                        <button class="clay-btn" onclick="calculateNUST()" style="width: 100%;">Calculate</button>
+                        <div id="nustResult" style="margin-top: 20px; padding: 20px; background: rgba(108, 99, 255, 0.1); border-radius: 15px; display: none;">
+                            <h3 style="color: var(--primary); margin-bottom: 10px;">Your Aggregate: <span id="nustAgg">0%</span></h3>
+                            <p style="font-size: 0.9rem; color: #718096;">Formula: 75% NET + 15% FSc + 10% Matric</p>
+                        </div>
+                    </div>
+                `;
+            } else if (uni === 'uet') {
+                html = `
+                    <div style="margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label>Matric (10%)</label>
+                            <input type="number" class="clay-input" id="uetMatric" placeholder="% marks">
+                        </div>
+                        <div class="form-group">
+                            <label>FSc (45%)</label>
+                            <input type="number" class="clay-input" id="uetFsc" placeholder="% marks">
+                        </div>
+                        <div class="form-group">
+                            <label>ECAT (30%)</label>
+                            <input type="number" class="clay-input" id="uetEntry" placeholder="% marks">
+                        </div>
+                        <button class="clay-btn" onclick="calculateUET()" style="width: 100%;">Calculate</button>
+                        <div id="uetResult" style="margin-top: 20px; padding: 20px; background: rgba(108, 99, 255, 0.1); border-radius: 15px; display: none;">
+                            <h3 style="color: var(--primary); margin-bottom: 10px;">Your Aggregate: <span id="uetAgg">0%</span></h3>
+                        </div>
+                    </div>
+                `;
+            } else {
+                html = `<p style="text-align: center; color: #718096;">Aggregate calculator for ${config.name} will be added soon.</p>`;
+            }
+            
+            // ADD NEW CALCULATOR HTML HERE FOR NEW UNIVERSITIES
+            
+            document.getElementById('calcContent').innerHTML = html;
+            showModal('calcModal');
+        }
+
+        function calculateNUST() {
+            const net = parseFloat(document.getElementById('nustNet').value) || 0;
+            const fscObt = parseFloat(document.getElementById('nustFscObt').value) || 0;
+            const fscTot = parseFloat(document.getElementById('nustFscTot').value) || 1100;
+            const matObt = parseFloat(document.getElementById('nustMatObt').value) || 0;
+            const matTot = parseFloat(document.getElementById('nustMatTot').value) || 1100;
+            
+            const netPct = (net / 200) * 100;
+            const fscPct = (fscObt / fscTot) * 100;
+            const matPct = (matObt / matTot) * 100;
+            
+            const agg = (0.75 * netPct) + (0.15 * fscPct) + (0.10 * matPct);
+            
+            document.getElementById('nustAgg').textContent = agg.toFixed(2) + '%';
+            document.getElementById('nustResult').style.display = 'block';
+        }
+
+        function calculateUET() {
+            const matric = parseFloat(document.getElementById('uetMatric').value) || 0;
+            const fsc = parseFloat(document.getElementById('uetFsc').value) || 0;
+            const entry = parseFloat(document.getElementById('uetEntry').value) || 0;
+            
+            const agg = (0.10 * matric) + (0.45 * fsc) + (0.30 * entry) + (0.15 * entry); // Simplified
+            // Actually UET: Matric 25%, Inter 45%, Entry 30%
+            const realAgg = (0.25 * matric) + (0.45 * fsc) + (0.30 * entry);
+            
+            document.getElementById('uetAgg').textContent = realAgg.toFixed(2) + '%';
+            document.getElementById('uetResult').style.display = 'block';
+        }
+
+        // ADD NEW CALCULATION FUNCTIONS HERE
+
+        // ==================== PAYMENT SYSTEM ====================
+        function showPremiumModal() {
+            showModal('limitModal');
+        }
+
+        function showPaymentForm() {
+            closeModal('limitModal');
+            showModal('paymentModal');
+        }
+
+        async function submitPayment(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('payName').value,
+                email: document.getElementById('payEmail').value,
+                transactionId: document.getElementById('payTID').value,
+                date: document.getElementById('payDate').value,
+                amount: '500',
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                const response = await fetch(API_BASE + '/api/payment/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Payment details submitted! Admin will verify within 24 hours.');
+                    closeModal('paymentModal');
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                // Local fallback
+                const payments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+                payments.push(data);
+                localStorage.setItem('pendingPayments', JSON.stringify(payments));
+                alert('Submitted locally (demo mode). Admin will verify.');
+                closeModal('paymentModal');
+            }
+        }
+
+        // ==================== ADMIN PANEL ====================
+        function showAdminLogin() {
+            showModal('adminLoginModal');
+        }
+
+        function checkAdminLogin(e) {
+            e.preventDefault();
+            const key = document.getElementById('adminKey').value;
+            if (key === 'admin123') { // Change this in production
+                document.getElementById('adminLoginModal').style.display = 'none';
+                showAdminPanel();
+            } else {
+                alert('Invalid admin key');
+            }
+        }
+
+        function showAdminPanel() {
+            document.querySelectorAll('.hero, .section').forEach(el => el.style.display = 'none');
+            document.getElementById('adminPanel').style.display = 'block';
+            loadAdminData();
+        }
+
+        function loadAdminData() {
+            // Load from localStorage for demo
+            const payments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            const tbody = document.getElementById('paymentsBody');
+            tbody.innerHTML = '';
+            
+            payments.forEach((pay, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${pay.name}</td>
+                    <td>${pay.email}</td>
+                    <td>${pay.transactionId}</td>
+                    <td>${pay.date}</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>
+                        <button class="admin-btn btn-approve" onclick="approvePayment(${idx})">Approve</button>
+                        <button class="admin-btn btn-decline" onclick="declinePayment(${idx})">Decline</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            document.getElementById('pendingPayments').textContent = payments.length;
+            
+            // Count users
+            let userCount = 0;
+            for (let i = 0; i < localStorage.length; i++) {
+                if (localStorage.key(i).startsWith('user_')) userCount++;
+            }
+            document.getElementById('totalUsers').textContent = userCount;
+        }
+
+        function approvePayment(idx) {
+            const payments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            const payment = payments[idx];
+            
+            // Upgrade user
+            const userKey = 'user_' + payment.email;
+            const user = JSON.parse(localStorage.getItem(userKey) || '{}');
+            user.isPremium = true;
+            localStorage.setItem(userKey, JSON.stringify(user));
+            
+            // Remove from pending
+            payments.splice(idx, 1);
+            localStorage.setItem('pendingPayments', JSON.stringify(payments));
+            
+            alert('Payment approved! User upgraded to Premium.');
+            loadAdminData();
+        }
+
+        function declinePayment(idx) {
+            const payments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            payments.splice(idx, 1);
+            localStorage.setItem('pendingPayments', JSON.stringify(payments));
+            loadAdminData();
+        }
+
+        function addUserManual(e) {
+            e.preventDefault();
+            const email = document.getElementById('newUserEmail').value;
+            const password = document.getElementById('newUserPass').value;
+            
+            const newUser = {
+                email,
+                password,
+                isPremium: true, // Manual adds are premium by default
+                testsTaken: 0
+            };
+            
+            localStorage.setItem('user_' + email, JSON.stringify(newUser));
+            alert('User added successfully!');
+            document.getElementById('newUserEmail').value = '';
+            document.getElementById('newUserPass').value = '';
+            loadAdminData();
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminPanel').style.display = 'none';
+            showSection('home');
+        }
+
+        // ==================== UTILITIES ====================
+        function showModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
